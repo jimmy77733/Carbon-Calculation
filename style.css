@@ -1,0 +1,195 @@
+/* 基本樣式與自然主題 */
+body {
+    font-family: 'Noto Sans TC', sans-serif;
+    background-color: #F0F4F0;
+    background-image: url('https://www.transparenttextures.com/patterns/natural-paper.png');
+    color: #3e4444;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    background-color: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    padding: 30px 40px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    overflow: hidden;
+}
+
+/* 標題 */
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+header h1 {
+    color: #2E7D32; /* 森林綠 */
+    font-size: 2.5rem;
+    margin: 0;
+}
+
+.leaf {
+    display: inline-block;
+    transform: rotate(-20deg);
+    animation: sway 5s ease-in-out infinite;
+}
+
+@keyframes sway {
+    0%, 100% { transform: rotate(-20deg); }
+    50% { transform: rotate(-10deg); }
+}
+
+header p {
+    color: #616161;
+    font-size: 1rem;
+}
+
+/* 輸入區域 */
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #4CAF50; /* 較亮的綠色 */
+}
+
+.input-group select,
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+.input-group select:focus,
+.input-group input:focus {
+    outline: none;
+    border-color: #4CAF50;
+    box-shadow: 0 0 10px rgba(76, 175, 80, 0.2);
+}
+
+/* 按鈕 */
+.button-group {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+button {
+    flex: 1;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#calculate-btn {
+    background-color: #4CAF50; /* 主按鈕綠色 */
+    color: white;
+}
+
+#calculate-btn:hover {
+    background-color: #43A047;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+#save-btn {
+    background-color: #81C784; /* 次按鈕淡綠色 */
+    color: #333;
+}
+
+#save-btn:hover:not(:disabled) {
+    background-color: #66BB6A;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+#save-btn:disabled {
+    background-color: #E0E0E0;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* 結果顯示區域 */
+.result-box {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #E8F5E9; /* 非常淡的綠色背景 */
+    border-radius: 10px;
+    text-align: center;
+    border: 1px dashed #4CAF50;
+    transition: all 0.5s ease;
+}
+
+.result-box.hidden {
+    display: none;
+}
+
+#result-text {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #2E7D32;
+    margin: 0;
+}
+
+.disclaimer {
+    text-align: center;
+    font-size: 0.8rem;
+    color: #999;
+    margin-top: 20px;
+}
+
+/* 讀取動畫 */
+.loader {
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #4CAF50;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 15px;
+}
+
+.loader.hidden {
+    display: none;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* 響應式設計 */
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
+    .container {
+        padding: 20px;
+    }
+    header h1 {
+        font-size: 2rem;
+    }
+    .button-group {
+        flex-direction: column;
+    }
+}
