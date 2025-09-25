@@ -3,59 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的綠色足跡 - 碳排放分析</title>
+    <title>我的綠色足跡 Pro - 精細碳排放分析</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
+    <div class="container" id="tilt-container">
         <header>
-            <h1><span class="leaf">🌿</span> 我的綠色足跡</h1>
-            <p>一個簡單的工具，幫助您了解日常選擇對環境的影響。</p>
+            <h1><span class="leaf">🌿</span> 我的綠色足跡 Pro</h1>
+            <p>一個更精準的工具，深入了解您的日常碳足跡。</p>
         </header>
 
         <main class="calculator">
-            <div class="input-group">
-                <label for="transport-type">今日交通方式：</label>
-                <select id="transport-type">
-                    <option value="walk_bike">步行/自行車</option>
-                    <option value="public_transit">大眾運輸</option>
-                    <option value="scooter">機車</option>
-                    <option value="gas_car">汽油車</option>
-                    <option value="electric_car">電動車</option>
-                </select>
+            <!-- 交通分區 -->
+            <div class="input-section">
+                <h2>🚗 每日交通</h2>
+                <div class="input-group">
+                    <label for="transport-type">交通方式：</label>
+                    <select id="transport-type">
+                        <option value="walk_bike">步行/自行車</option>
+                        <option value="public_transit">大眾運輸</option>
+                        <option value="scooter">機車</option>
+                        <option value="gas_car">汽油車</option>
+                        <option value="electric_car">電動車</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="distance">交通里程 (公里)：</label>
+                    <input type="number" id="distance" placeholder="0" min="0" value="10">
+                </div>
             </div>
 
-            <div class="input-group">
-                <label for="distance">今日交通里程 (公里)：</label>
-                <input type="number" id="distance" placeholder="請輸入公里數" min="0" value="10">
+            <!-- 飲食分區 -->
+            <div class="input-section">
+                <h2>🍲 今日飲食</h2>
+                <div class="input-group">
+                    <label for="diet-type">飲食習慣：</label>
+                    <select id="diet-type">
+                        <option value="vegan">純素</option>
+                        <option value="vegetarian">蛋奶素</option>
+                        <option value="omnivore_low">雜食 (少肉)</option>
+                        <option value="omnivore_high">雜食 (多肉)</option>
+                    </select>
+                </div>
             </div>
 
-            <div class="input-group">
-                <label for="diet-type">今日飲食習慣：</label>
-                <select id="diet-type">
-                    <option value="vegan">純素</option>
-                    <option value="vegetarian">蛋奶素</option>
-                    <option value="omnivore_low">雜食 (少肉)</option>
-                    <option value="omnivore_high">雜食 (多肉)</option>
-                </select>
+            <!-- 能源分區 -->
+            <div class="input-section">
+                <h2>🏠 居家能源</h2>
+                <div class="input-group">
+                    <label for="electricity">今日用電量 (度/kWh)：</label>
+                    <input type="number" id="electricity" placeholder="0" min="0" value="5">
+                </div>
+                <div class="input-group">
+                    <label for="water">今日用水量 (公升)：</label>
+                    <input type="number" id="water" placeholder="0" min="0" value="100">
+                </div>
+            </div>
+
+             <!-- 廢棄物分區 -->
+            <div class="input-section">
+                <h2>♻️ 廢棄物</h2>
+                <div class="input-group">
+                    <label for="waste">今日產生垃圾量 (公斤)：</label>
+                    <input type="number" id="waste" placeholder="0" min="0" value="1">
+                </div>
             </div>
 
             <div class="button-group">
-                <button id="calculate-btn">開始計算</button>
+                <button id="calculate-btn">開始分析</button>
                 <button id="save-btn" disabled>儲存紀錄</button>
             </div>
             
             <div id="result" class="result-box hidden">
                 <div id="loader" class="loader hidden"></div>
-                <p id="result-text"></p>
+                <div id="result-content">
+                    <p id="total-result-text"></p>
+                    <ul id="result-breakdown"></ul>
+                </div>
             </div>
-             <p class="disclaimer">*計算結果為估算值，僅供參考。</p>
+             <p class="disclaimer">*計算結果基於國際平均數據，僅供參考。</p>
         </main>
     </div>
 
     <script src="script.js"></script>
 </body>
 </html>
+
