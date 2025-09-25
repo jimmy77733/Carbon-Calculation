@@ -1,67 +1,103 @@
-/* 基本樣式與自然主題 */
+/* CSS 變數，方便管理顏色 */
+:root {
+    --primary-green: #2E7D32;
+    --light-green: #4CAF50;
+    --bg-color: #e8ede7;
+    --text-color: #3e4444;
+    --container-bg: rgba(255, 255, 255, 0.6);
+    --shadow-color-light: rgba(46, 125, 50, 0.2);
+    --shadow-color-deep: rgba(46, 125, 50, 0.4);
+}
+
 body {
     font-family: 'Noto Sans TC', sans-serif;
-    background-color: #F0F4F0;
-    background-image: url('https://www.transparenttextures.com/patterns/natural-paper.png');
-    color: #3e4444;
+    background-image: linear-gradient(120deg, #f6f9f5 0%, #e8ede7 100%);
+    color: var(--text-color);
     margin: 0;
-    padding: 20px;
+    padding: 40px 20px;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    perspective: 1000px; /* 為了3D效果，建立透視舞台 */
 }
 
 .container {
-    background-color: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    background-color: var(--container-bg);
+    backdrop-filter: blur(15px); /* 毛玻璃效果！ */
+    -webkit-backdrop-filter: blur(15px);
+    border-radius: 25px;
     width: 100%;
-    max-width: 500px;
+    max-width: 550px;
     padding: 30px 40px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    
+    /* 3D 效果與呼吸陰影 */
+    transform-style: preserve-3d;
+    transition: transform 0.1s ease-out;
+    animation: breathing-shadow 5s infinite ease-in-out;
 }
+
+@keyframes breathing-shadow {
+    0% {
+        box-shadow: 0 10px 30px -5px var(--shadow-color-light);
+    }
+    50% {
+        box-shadow: 0 15px 45px -5px var(--shadow-color-deep);
+    }
+    100% {
+        box-shadow: 0 10px 30px -5px var(--shadow-color-light);
+    }
+}
+
 
 /* 標題 */
 header {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
 }
 
 header h1 {
-    color: #2E7D32; /* 森林綠 */
+    color: var(--primary-green);
     font-size: 2.5rem;
     margin: 0;
 }
 
 .leaf {
     display: inline-block;
-    transform: rotate(-20deg);
     animation: sway 5s ease-in-out infinite;
 }
 
 @keyframes sway {
-    0%, 100% { transform: rotate(-20deg); }
-    50% { transform: rotate(-10deg); }
+    0%, 100% { transform: rotate(-20deg) scale(1); }
+    50% { transform: rotate(-10deg) scale(1.1); }
 }
 
-header p {
-    color: #616161;
-    font-size: 1rem;
+/* 輸入分區 */
+.input-section {
+    margin-bottom: 25px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 20px;
+}
+.input-section:last-of-type {
+    border-bottom: none;
+}
+.input-section h2 {
+    font-size: 1.2rem;
+    color: var(--primary-green);
+    margin-top: 0;
+    margin-bottom: 15px;
 }
 
-/* 輸入區域 */
 .input-group {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .input-group label {
     display: block;
     margin-bottom: 8px;
     font-weight: bold;
-    color: #4CAF50; /* 較亮的綠色 */
+    color: var(--light-green);
 }
 
 .input-group select,
@@ -70,7 +106,7 @@ header p {
     padding: 12px;
     border-radius: 10px;
     border: 1px solid #ccc;
-    background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.8);
     font-size: 1rem;
     box-sizing: border-box;
     transition: all 0.3s ease;
@@ -79,15 +115,16 @@ header p {
 .input-group select:focus,
 .input-group input:focus {
     outline: none;
-    border-color: #4CAF50;
-    box-shadow: 0 0 10px rgba(76, 175, 80, 0.2);
+    border-color: var(--light-green);
+    box-shadow: 0 0 15px rgba(76, 175, 80, 0.3);
+    transform: scale(1.02);
 }
 
-/* 按鈕 */
+/* 按鈕互動效果 */
 .button-group {
     display: flex;
     gap: 15px;
-    margin-top: 30px;
+    margin-top: 20px;
 }
 
 button {
@@ -98,57 +135,104 @@ button {
     font-size: 1.1rem;
     font-weight: bold;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease-out;
+    position: relative;
+    overflow: hidden;
 }
 
+button:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(1, 1) translate(-50%, -50%);
+    transform-origin: 50% 50%;
+}
+
+button:focus:not(:active)::after {
+    animation: ripple 1s ease-out;
+}
+
+@keyframes ripple {
+    0% {
+        transform: scale(0, 0) translate(-50%, -50%);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(20, 20) translate(-50%, -50%);
+        opacity: 0;
+    }
+}
+
+
 #calculate-btn {
-    background-color: #4CAF50; /* 主按鈕綠色 */
+    background: linear-gradient(45deg, var(--light-green), var(--primary-green));
     color: white;
 }
 
 #calculate-btn:hover {
-    background-color: #43A047;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 #save-btn {
-    background-color: #81C784; /* 次按鈕淡綠色 */
-    color: #333;
+    background-color: #E0E0E0;
+    color: #555;
 }
 
 #save-btn:hover:not(:disabled) {
-    background-color: #66BB6A;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    background-color: #ccc;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
 #save-btn:disabled {
-    background-color: #E0E0E0;
     cursor: not-allowed;
-    opacity: 0.7;
+    opacity: 0.6;
 }
 
 /* 結果顯示區域 */
 .result-box {
     margin-top: 30px;
     padding: 20px;
-    background-color: #E8F5E9; /* 非常淡的綠色背景 */
+    background-color: rgba(232, 245, 233, 0.8);
     border-radius: 10px;
     text-align: center;
-    border: 1px dashed #4CAF50;
+    border: 1px dashed var(--light-green);
     transition: all 0.5s ease;
 }
-
 .result-box.hidden {
     display: none;
 }
 
-#result-text {
-    font-size: 1.2rem;
+#total-result-text {
+    font-size: 1.3rem;
     font-weight: bold;
-    color: #2E7D32;
+    color: var(--primary-green);
+    margin: 0 0 15px 0;
+}
+
+#result-breakdown {
+    list-style: none;
+    padding: 0;
     margin: 0;
+    text-align: left;
+    font-size: 1rem;
+}
+
+#result-breakdown li {
+    padding: 5px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+#result-breakdown li span:last-child {
+    font-weight: bold;
 }
 
 .disclaimer {
@@ -161,35 +245,21 @@ button {
 /* 讀取動畫 */
 .loader {
     border: 5px solid #f3f3f3;
-    border-top: 5px solid #4CAF50;
+    border-top: 5px solid var(--light-green);
     border-radius: 50%;
     width: 40px;
     height: 40px;
     animation: spin 1s linear infinite;
     margin: 0 auto 15px;
 }
-
-.loader.hidden {
-    display: none;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
+.loader.hidden { display: none; }
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
 /* 響應式設計 */
 @media (max-width: 600px) {
-    body {
-        padding: 10px;
-    }
-    .container {
-        padding: 20px;
-    }
-    header h1 {
-        font-size: 2rem;
-    }
-    .button-group {
-        flex-direction: column;
-    }
+    body { padding: 20px 10px; }
+    .container { padding: 20px; }
+    header h1 { font-size: 2rem; }
+    .button-group { flex-direction: column; }
 }
+
